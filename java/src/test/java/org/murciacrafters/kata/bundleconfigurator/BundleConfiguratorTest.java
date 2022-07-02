@@ -23,6 +23,19 @@ public class BundleConfiguratorTest {
         );
     }
 
+    private static Stream<Arguments> bundlesAnyOrder() {
+        return Stream.of(
+                Arguments.of(List.of(Product.P2, Product.P1), "B1"),
+                Arguments.of(List.of(Product.P4, Product.P1), "B2"),
+                Arguments.of(List.of(Product.P4, Product.P3), "B3"),
+                Arguments.of(List.of(Product.P4, Product.P3, Product.P2, Product.P1), "B4"),
+                Arguments.of(List.of(Product.P4, Product.P3, Product.P1, Product.P2), "B4"),
+                Arguments.of(List.of(Product.P4, Product.P1, Product.P3, Product.P2), "B4"),
+                Arguments.of(List.of(Product.P1, Product.P4, Product.P3, Product.P2), "B4"),
+                Arguments.of(List.of(Product.P5, Product.P1), "B5")
+        );
+    }
+
     @Test
     void should_empty_when_buy_nothing() {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
@@ -54,13 +67,13 @@ public class BundleConfiguratorTest {
         assertThat(bestBuyConfig).isEqualTo(bundle);
     }
 
-    @Test
-    void order_is_irrelevant() {
+    @ParameterizedTest
+    @MethodSource("bundlesAnyOrder")
+    void order_is_irrelevant(List<Product> products, String bundle) {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
-        List<Product> products = List.of(Product.P2, Product.P1);
         String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo("B1");
+        assertThat(bestBuyConfig).isEqualTo(bundle);
     }
 }

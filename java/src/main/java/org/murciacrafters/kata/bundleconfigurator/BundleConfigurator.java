@@ -5,6 +5,6 @@ import java.util.List;
 public final class BundleConfigurator {
 
     public String calculateBestBuy(List<Product> products) {
-        return "P1";
+        return products.get(0).name();
     }
 }

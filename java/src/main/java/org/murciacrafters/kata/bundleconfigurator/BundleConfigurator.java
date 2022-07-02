@@ -9,6 +9,10 @@ public final class BundleConfigurator {
             return "";
         }
 
-        return products.get(0).name();
+        if (products.size() == 1) {
+            return products.get(0).name();
+        }
+
+        return "B1";
     }
 }

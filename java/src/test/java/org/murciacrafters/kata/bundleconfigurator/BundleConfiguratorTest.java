@@ -41,9 +41,9 @@ public class BundleConfiguratorTest {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
         List<Product> products = List.of();
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+        List<String> bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo("");
+        assertThat(bestBuyConfig).isEmpty();
     }
 
     @ParameterizedTest
@@ -52,9 +52,9 @@ public class BundleConfiguratorTest {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
         List<Product> products = List.of(product);
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+        List<String> bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo(product.name());
+        assertThat(bestBuyConfig).containsExactly(product.name());
     }
 
     @ParameterizedTest
@@ -62,9 +62,9 @@ public class BundleConfiguratorTest {
     void should_return_bundle(List<Product> products, String bundle) {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+        List<String> bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo(bundle);
+        assertThat(bestBuyConfig).containsExactlyInAnyOrder(bundle);
     }
 
     @ParameterizedTest
@@ -72,9 +72,9 @@ public class BundleConfiguratorTest {
     void order_is_irrelevant(List<Product> products, String bundle) {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+        List<String> bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo(bundle);
+        assertThat(bestBuyConfig).containsExactlyInAnyOrder(bundle);
     }
 
     @Test
@@ -82,8 +82,8 @@ public class BundleConfiguratorTest {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 
         List<Product> products = List.of(Product.P1, Product.P2, Product.P3);
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+        List<String> bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
-        assertThat(bestBuyConfig).isEqualTo("B1,P3");
+        assertThat(bestBuyConfig).containsExactlyInAnyOrder("B1", "P3");
     }
 }

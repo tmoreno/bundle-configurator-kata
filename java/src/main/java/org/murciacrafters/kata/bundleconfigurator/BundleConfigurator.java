@@ -67,6 +67,12 @@ public final class BundleConfigurator {
                         result.remove("B3");
                         result.add("B4");
                     }
+                    else if (result.contains("B2") && result.contains("P3")) {
+                        result.remove("P3");
+                        result.remove("P2");
+                        result.remove("B2");
+                        result.add("B4");
+                    }
                     else if (result.contains("P1")) {
                         result.remove("P1");
                         result.remove("P2");

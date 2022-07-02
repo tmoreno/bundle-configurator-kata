@@ -40,4 +40,14 @@ public class BundleConfiguratorTest {
 
         assertThat(bestBuyConfig).isEqualTo("B1");
     }
+
+    @Test
+    void order_is_irrelevant() {
+        BundleConfigurator bundleConfigurator = new BundleConfigurator();
+
+        List<Product> products = List.of(Product.P2, Product.P1);
+        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+
+        assertThat(bestBuyConfig).isEqualTo("B1");
+    }
 }

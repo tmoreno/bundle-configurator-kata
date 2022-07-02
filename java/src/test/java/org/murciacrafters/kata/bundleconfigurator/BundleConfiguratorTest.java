@@ -2,13 +2,26 @@ package org.murciacrafters.kata.bundleconfigurator;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BundleConfiguratorTest {
+
+    private static Stream<Arguments> bundles() {
+        return Stream.of(
+            Arguments.of(List.of(Product.P1, Product.P2), "B1"),
+            Arguments.of(List.of(Product.P1, Product.P4), "B2"),
+            Arguments.of(List.of(Product.P3, Product.P4), "B3"),
+            Arguments.of(List.of(Product.P1, Product.P2, Product.P3, Product.P4), "B4"),
+            Arguments.of(List.of(Product.P1, Product.P5), "B5")
+        );
+    }
 
     @Test
     void should_empty_when_buy_nothing() {
@@ -29,6 +42,16 @@ public class BundleConfiguratorTest {
         String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
 
         assertThat(bestBuyConfig).isEqualTo(product.name());
+    }
+
+    @ParameterizedTest
+    @MethodSource("bundles")
+    void should_return_bundle(List<Product> products, String bundle) {
+        BundleConfigurator bundleConfigurator = new BundleConfigurator();
+
+        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+
+        assertThat(bestBuyConfig).isEqualTo(bundle);
     }
 
     @Test

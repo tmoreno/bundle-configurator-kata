@@ -2,144 +2,57 @@ package org.murciacrafters.kata.bundleconfigurator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public final class BundleConfigurator {
 
     public String calculateBestBuy(List<Product> products) {
-        List<String> result = new ArrayList<>();
+
+        int product1Count = 0;
+        int product2Count = 0;
+        int product3Count = 0;
+        int product4Count = 0;
+        int product5Count = 0;
 
         for (Product product : products) {
             switch (product) {
-                case P1 -> addP1(result);
-                case P2 -> addP2(result);
-                case P3 -> addP3(result);
-                case P4 -> addP4(result);
-                case P5 -> addP5(result);
+                case P1 -> product1Count++;
+                case P2 -> product2Count++;
+                case P3 -> product3Count++;
+                case P4 -> product4Count++;
+                case P5 -> product5Count++;
             }
         }
 
+        int bundle1Count = Math.min(product1Count, product2Count);
+        int bundle2Count = Math.min(product1Count, product4Count);
+        int bundle3Count = Math.min(product3Count, product4Count);
+        int bundle4Count = Math.min(product1Count, Math.min(product2Count, Math.min(product3Count, product4Count)));
+        int bundle5Count = Math.min(product1Count, product5Count);
+
+        product1Count -= bundle1Count + bundle2Count + bundle4Count + bundle5Count;
+        product2Count -= bundle1Count + bundle4Count;
+        product3Count -= bundle3Count + bundle4Count;
+        product4Count -= bundle2Count + bundle3Count + bundle4Count;
+        product5Count -= bundle5Count;
+
+        bundle1Count -= bundle4Count;
+        bundle2Count -= bundle4Count;
+        bundle3Count -= bundle4Count;
+
+        List<String> result = new ArrayList<>();
+        IntStream.range(0, product1Count).forEach(x -> result.add("P1"));
+        IntStream.range(0, product2Count).forEach(x -> result.add("P2"));
+        IntStream.range(0, product3Count).forEach(x -> result.add("P3"));
+        IntStream.range(0, product4Count).forEach(x -> result.add("P4"));
+        IntStream.range(0, product5Count).forEach(x -> result.add("P5"));
+
+        IntStream.range(0, bundle1Count).forEach(x -> result.add("B1"));
+        IntStream.range(0, bundle2Count).forEach(x -> result.add("B2"));
+        IntStream.range(0, bundle3Count).forEach(x -> result.add("B3"));
+        IntStream.range(0, bundle4Count).forEach(x -> result.add("B4"));
+        IntStream.range(0, bundle5Count).forEach(x -> result.add("B5"));
+
         return String.join(",", result);
-    }
-
-    private void addP1(List<String> result) {
-        result.add("P1");
-
-        if (result.contains("P2") && result.contains("P3") && result.contains("P4")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B4");
-        }
-        else if (result.contains("B3") && result.contains("P2")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("B3");
-            result.add("B4");
-        }
-        else if (result.contains("P2")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.add("B1");
-        }
-        else if (result.contains("P4")) {
-            result.remove("P1");
-            result.remove("P4");
-            result.add("B2");
-        }
-        else if (result.contains("P5")) {
-            result.remove("P1");
-            result.remove("P5");
-            result.add("B5");
-        }
-    }
-
-    private void addP2(List<String> result) {
-        result.add("P2");
-
-        if (result.contains("P1") && result.contains("P3") && result.contains("P4")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B4");
-        }
-        else if (result.contains("B3") && result.contains("P1")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("B3");
-            result.add("B4");
-        }
-        else if (result.contains("B2") && result.contains("P3")) {
-            result.remove("P3");
-            result.remove("P2");
-            result.remove("B2");
-            result.add("B4");
-        }
-        else if (result.contains("P1")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.add("B1");
-        }
-    }
-
-    private void addP3(List<String> result) {
-        result.add("P3");
-
-        if (result.contains("P1") && result.contains("P2") && result.contains("P4")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B4");
-        }
-        else if (result.contains("B1") && result.contains("P4")) {
-            result.remove("P3");
-            result.remove("P4");
-            result.remove("B1");
-            result.add("B4");
-        }
-        else if (result.contains("P4")) {
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B3");
-        }
-    }
-
-    private void addP4(List<String> result) {
-        result.add("P4");
-
-        if (result.contains("P1") && result.contains("P2") && result.contains("P3")) {
-            result.remove("P1");
-            result.remove("P2");
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B4");
-        }
-        else if (result.contains("B1") && result.contains("P3")) {
-            result.remove("P3");
-            result.remove("P4");
-            result.remove("B1");
-            result.add("B4");
-        }
-        else if (result.contains("P1")) {
-            result.remove("P1");
-            result.remove("P4");
-            result.add("B2");
-        } else if (result.contains("P3")) {
-            result.remove("P3");
-            result.remove("P4");
-            result.add("B3");
-        }
-    }
-
-    private void addP5(List<String> result) {
-        result.add("P5");
-
-        if (result.contains("P1")) {
-            result.remove("P1");
-            result.remove("P5");
-            result.add("B5");
-        }
     }
 }

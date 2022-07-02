@@ -55,26 +55,6 @@ public class BundleConfiguratorTest {
     }
 
     @Test
-    void should_return_B1_when_buy_P1_and_P2_products() {
-        BundleConfigurator bundleConfigurator = new BundleConfigurator();
-
-        List<Product> products = List.of(Product.P1, Product.P2);
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
-
-        assertThat(bestBuyConfig).isEqualTo("B1");
-    }
-
-    @Test
-    void should_return_B2_when_buy_P1_and_P4_products() {
-        BundleConfigurator bundleConfigurator = new BundleConfigurator();
-
-        List<Product> products = List.of(Product.P1, Product.P4);
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
-
-        assertThat(bestBuyConfig).isEqualTo("B2");
-    }
-
-    @Test
     void order_is_irrelevant() {
         BundleConfigurator bundleConfigurator = new BundleConfigurator();
 

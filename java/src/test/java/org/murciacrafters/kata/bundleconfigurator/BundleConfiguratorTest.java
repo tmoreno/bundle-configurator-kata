@@ -17,4 +17,14 @@ public class BundleConfiguratorTest {
 
         assertThat(bestBuyConfig).isEqualTo("P1");
     }
+
+    @Test
+    void should_P2_when_buy_P2() {
+        BundleConfigurator bundleConfigurator = new BundleConfigurator();
+
+        List<Product> products = List.of(Product.P2);
+        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
+
+        assertThat(bestBuyConfig).isEqualTo("P2");
+    }
 }

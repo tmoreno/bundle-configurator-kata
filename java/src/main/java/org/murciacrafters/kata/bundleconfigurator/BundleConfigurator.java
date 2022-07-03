@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public final class BundleConfigurator {
 
-    public List<String> calculateBestBuy(List<Product> products) {
+    public String calculateBestBuy(List<Product> products) {
 
         int product1Count = 0;
         int product2Count = 0;
@@ -53,6 +53,6 @@ public final class BundleConfigurator {
         IntStream.range(0, bundle4Count).forEach(x -> result.add("B4"));
         IntStream.range(0, bundle5Count).forEach(x -> result.add("B5"));
 
-        return result;
+        return String.join(",", result);
     }
 }

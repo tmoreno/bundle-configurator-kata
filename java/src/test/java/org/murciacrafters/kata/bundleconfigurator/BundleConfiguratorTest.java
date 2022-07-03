@@ -76,14 +76,4 @@ public class BundleConfiguratorTest {
 
         assertThat(bestBuyConfig).isEqualTo(bundle);
     }
-
-    @Test
-    void should_return_B1_and_P3_when_buy_P1_and_P2_and_P3() {
-        BundleConfigurator bundleConfigurator = new BundleConfigurator();
-
-        List<Product> products = List.of(Product.P1, Product.P2, Product.P3);
-        String bestBuyConfig = bundleConfigurator.calculateBestBuy(products);
-
-        assertThat(bestBuyConfig).isEqualTo("B1,P3");
-    }
 }
